@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 final List<Map<String, dynamic>> dummyOrders = [
@@ -39,9 +40,31 @@ final List<Map<String, dynamic>> dummyOrders = [
   },
 ];
 
-class OrdersPage extends StatelessWidget {
+class OrdersPage extends StatefulWidget {
   const OrdersPage({super.key});
-  
+
+  @override
+  State<OrdersPage> createState() => _OrdersPageState();
+}
+
+class _OrdersPageState extends State<OrdersPage> {
+  late List<Map<String, dynamic>> orders;
+
+  @override
+  void initState() {
+    super.initState();
+    orders = dummyOrders
+        .map((order) => Map<String, dynamic>.from(order))
+        .toList();
+  }
+
+  void updateStatus(int index, String status) {
+    setState(() {
+      orders[index]['status'] = status;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -52,7 +75,7 @@ class OrdersPage extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: EdgeInsets.all(12),
-        itemCount: dummyOrders.length,
+        itemCount: orders.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(bottom: 16),
@@ -74,7 +97,7 @@ class OrdersPage extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          dummyOrders[index]['imageUrl'],
+                          orders[index]['imageUrl'],
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
@@ -100,7 +123,7 @@ class OrdersPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              dummyOrders[index]['category'],
+                              orders[index]['category'],
                               style: TextStyle(
                                 color: Colors.deepOrange,
                                 fontSize: 13,
@@ -111,7 +134,7 @@ class OrdersPage extends StatelessWidget {
                             SizedBox(height: 5),
 
                             Text(
-                              dummyOrders[index]['title'],
+                              orders[index]['title'],
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -122,7 +145,7 @@ class OrdersPage extends StatelessWidget {
                             SizedBox(height: 5),
 
                             Text(
-                              "ID: ${dummyOrders[index]['id']}",
+                              "ID: ${orders[index]['id']}",
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.grey[600],
@@ -132,7 +155,7 @@ class OrdersPage extends StatelessWidget {
                             SizedBox(height: 5),
 
                             Text(
-                              "\$${dummyOrders[index]['price']}",
+                              "\$${orders[index]['price']}",
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -148,24 +171,26 @@ class OrdersPage extends StatelessWidget {
                   SizedBox(height: 10),
 
                   Text(
-                    'Status: ${dummyOrders[index]['status']}',
+                    'Status: ${orders[index]['status']}',
                     style: TextStyle(
-                      color: dummyOrders[index]['status'] == 'done'
-                        ? Colors.green
-                        : dummyOrders[index]['status'] == 'cancelled'
-                          ? Colors.red
-                          : Colors.blueGrey,
-                        fontWeight: FontWeight.w500,
+                      color: orders[index]['status'] == 'done'
+                          ? Colors.green
+                          : orders[index]['status'] == 'cancelled'
+                              ? Colors.red
+                              : Colors.blueGrey,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
 
-                  SizedBox(height: 8)
+                  SizedBox(height: 8),
 
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: orders[index]['status'] == 'pending'
+                              ? () => updateStatus(index, 'done')
+                              : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white,
@@ -178,7 +203,9 @@ class OrdersPage extends StatelessWidget {
 
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: orders[index]['status'] == 'pending'
+                              ? () => updateStatus(index, 'cancelled')
+                              : null,
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.red,
                             side: BorderSide(color: Colors.red),

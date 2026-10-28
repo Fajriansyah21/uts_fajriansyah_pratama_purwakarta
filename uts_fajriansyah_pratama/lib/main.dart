@@ -110,11 +110,13 @@ class OnboardingPage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => OrdersPage()),
                     );
                   },
+                  
                   child: Text(
                     "NEXT",
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 15.0,
                       fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2,
                       color: Colors.white,
                     ),
                   ),
