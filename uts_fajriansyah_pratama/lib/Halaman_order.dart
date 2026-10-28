@@ -8,6 +8,7 @@ final List<Map<String, dynamic>> dummyOrders = [
     'price': 60,
     'imageUrl':
         'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=500&q=80',
+    'status': 'pending',
   },
   {
     'id': 32054,
@@ -16,6 +17,7 @@ final List<Map<String, dynamic>> dummyOrders = [
     'price': 45,
     'imageUrl':
         'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80',
+    'status': 'pending',
   },
   {
     'id': 32055,
@@ -24,6 +26,7 @@ final List<Map<String, dynamic>> dummyOrders = [
     'price': 55,
     'imageUrl':
         'https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=500&q=80',
+    'status': 'pending',
   },
   {
     'id': 32056,
@@ -32,13 +35,13 @@ final List<Map<String, dynamic>> dummyOrders = [
     'price': 30,
     'imageUrl':
         'https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=500&q=80',
+    'status': 'pending',
   },
 ];
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
-
-  @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -142,17 +145,31 @@ class OrdersPage extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: 12),
+                  SizedBox(height: 10),
+
+                  Text(
+                    'Status: ${dummyOrders[index]['status']}',
+                    style: TextStyle(
+                      color: dummyOrders[index]['status'] == 'done'
+                        ? Colors.green
+                        : dummyOrders[index]['status'] == 'cancelled'
+                          ? Colors.red
+                          : Colors.blueGrey,
+                        fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
+                  SizedBox(height: 8)
 
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton(
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white,
                           ),
-                          onPressed: () {},
                           child: Text("Done"),
                         ),
                       ),
@@ -161,11 +178,11 @@ class OrdersPage extends StatelessWidget {
 
                       Expanded(
                         child: OutlinedButton(
+                          onPressed: () {},
                           style: OutlinedButton.styleFrom(
                             foregroundColor: Colors.red,
                             side: BorderSide(color: Colors.red),
                           ),
-                          onPressed: () {},
                           child: Text("Cancel"),
                         ),
                       ),
