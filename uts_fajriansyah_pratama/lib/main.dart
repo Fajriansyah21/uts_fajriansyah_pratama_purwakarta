@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Halaman_order.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -123,11 +124,44 @@ class OnboardingPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(11),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrdersPage(),
+                      ),
+                    );
+                  },
                   child: Text(
                     "NEXT",
-                    style: 
-                  )
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: 4
+            ),
+
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OrdersPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Skip",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors. blueGrey[400],
                 ),
               ),
             ),
